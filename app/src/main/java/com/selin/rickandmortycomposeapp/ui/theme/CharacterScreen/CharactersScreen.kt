@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp
+package com.selin.rickandmortycomposeapp.ui.theme.CharacterScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -26,10 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.selin.rickandmortycomposeapp.entity.character.Character
+import com.selin.rickandmortycomposeapp.R
+import com.selin.rickandmortycomposeapp.data.model.Character
 import com.selin.rickandmortycomposeapp.viewmodel.RickAndMortyCharacterViewModel
 import com.skydoves.landscapist.glide.GlideImage
-import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

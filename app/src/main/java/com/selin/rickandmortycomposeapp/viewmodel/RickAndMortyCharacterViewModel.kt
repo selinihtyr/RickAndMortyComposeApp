@@ -2,9 +2,8 @@ package com.selin.rickandmortycomposeapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.selin.rickandmortycomposeapp.entity.character.Character
+import com.selin.rickandmortycomposeapp.data.model.Character
 import com.selin.rickandmortycomposeapp.repository.RickAndMortyRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 class RickAndMortyCharacterViewModel @Inject constructor(private val rickAndMortyRepo: RickAndMortyRepository) :

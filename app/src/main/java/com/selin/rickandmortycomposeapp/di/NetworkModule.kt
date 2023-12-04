@@ -1,5 +1,6 @@
-package com.selin.rickandmortycomposeapp.retrofit
+package com.selin.rickandmortycomposeapp.di
 
+import com.selin.rickandmortycomposeapp.data.remote.RickAndMortyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

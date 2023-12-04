@@ -1,6 +1,6 @@
-package com.selin.rickandmortycomposeapp.retrofit
+package com.selin.rickandmortycomposeapp.data.remote
 
-import com.selin.rickandmortycomposeapp.entity.character.CharacterResponse
+import com.selin.rickandmortycomposeapp.data.model.response.CharacterResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

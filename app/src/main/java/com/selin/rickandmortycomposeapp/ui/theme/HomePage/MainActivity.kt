@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp
+package com.selin.rickandmortycomposeapp.ui.theme.HomePage
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,8 +31,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
-import com.selin.rickandmortycomposeapp.entity.character.Character
-import com.selin.rickandmortycomposeapp.entity.character.CharacterHomePage
+import com.selin.rickandmortycomposeapp.R
+import com.selin.rickandmortycomposeapp.data.model.Character
+import com.selin.rickandmortycomposeapp.data.local.CharacterHomePage
+import com.selin.rickandmortycomposeapp.ui.theme.CharacterScreen.CharacterScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
