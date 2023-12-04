@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp
+package com.selin.rickandmortycomposeapp.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
