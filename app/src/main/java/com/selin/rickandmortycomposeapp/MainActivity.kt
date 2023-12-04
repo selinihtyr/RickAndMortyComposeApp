@@ -36,6 +36,7 @@ import com.selin.rickandmortycomposeapp.entity.character.CharacterHomePage
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
