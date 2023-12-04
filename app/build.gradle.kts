@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -53,6 +54,7 @@ android {
 }
 
 apply(plugin = "kotlin-kapt")
+apply(plugin = "dagger.hilt.android.plugin")
 
 dependencies {
 
@@ -87,11 +89,15 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //Dagger Hilt
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt ("androidx.hilt:hilt-compiler:1.1.0")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
 
     //Glide
     implementation("com.github.skydoves:landscapist-glide:1.3.7")
 
     implementation ("io.coil-kt:coil-compose:2.4.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }
