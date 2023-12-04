@@ -32,8 +32,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.data.model.Character
-import com.selin.rickandmortycomposeapp.data.local.CharacterHomePage
+import com.selin.rickandmortycomposeapp.data.model.remote.Character
+import com.selin.rickandmortycomposeapp.data.model.local.CharacterHomePage
 import com.selin.rickandmortycomposeapp.ui.theme.CharacterScreen.CharacterScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint

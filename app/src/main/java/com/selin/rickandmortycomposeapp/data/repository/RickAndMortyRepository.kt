@@ -1,10 +1,9 @@
-package com.selin.rickandmortycomposeapp.repository
+package com.selin.rickandmortycomposeapp.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.selin.rickandmortycomposeapp.data.model.Character
+import com.selin.rickandmortycomposeapp.data.model.remote.Character
 import com.selin.rickandmortycomposeapp.data.model.response.CharacterResponse
-import com.selin.rickandmortycomposeapp.di.NetworkModule
 import com.selin.rickandmortycomposeapp.data.remote.RickAndMortyApi
 import retrofit2.Call
 import retrofit2.Callback

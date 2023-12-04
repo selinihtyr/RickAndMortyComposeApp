@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.data.model.Character
 import com.selin.rickandmortycomposeapp.viewmodel.RickAndMortyCharacterViewModel
 import com.skydoves.landscapist.glide.GlideImage
 

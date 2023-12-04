@@ -3,16 +3,16 @@ package com.selin.rickandmortycomposeapp.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.selin.rickandmortycomposeapp.data.model.Character
-import com.selin.rickandmortycomposeapp.repository.RickAndMortyRepository
+import com.selin.rickandmortycomposeapp.data.model.remote.Character
+import com.selin.rickandmortycomposeapp.data.repository.RickAndMortyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class RickAndMortyCharacterViewModel @Inject constructor(
-    private val rickAndMortyRepo: RickAndMortyRepository) :
+    private val rickAndMortyRepo: RickAndMortyRepository
+) :
     ViewModel() {
 
     var characterList = MutableLiveData<List<Character>>()

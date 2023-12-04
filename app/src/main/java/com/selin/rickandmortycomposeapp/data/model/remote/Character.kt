@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.data.model
+package com.selin.rickandmortycomposeapp.data.model.remote
 
 data class Character(
     val created: String,

@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.data.local
+package com.selin.rickandmortycomposeapp.data.model.local
 
 data class CharacterHomePage(
     var id: Int,

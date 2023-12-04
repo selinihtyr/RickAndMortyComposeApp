@@ -1,7 +1,7 @@
 package com.selin.rickandmortycomposeapp.data.model.response
 
-import com.selin.rickandmortycomposeapp.data.model.Character
-import com.selin.rickandmortycomposeapp.data.model.Info
+import com.selin.rickandmortycomposeapp.data.model.remote.Character
+import com.selin.rickandmortycomposeapp.data.model.remote.Info
 
 data class CharacterResponse(
     val info: Info,
