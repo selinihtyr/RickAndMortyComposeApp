@@ -34,7 +34,7 @@ import com.skydoves.landscapist.glide.GlideImage
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CharacterScreen(character: Character) {
+fun CharacterScreen() {
     val viewModel: RickAndMortyCharacterViewModel = viewModel()
     val characterList = viewModel.characterList.observeAsState(listOf())
 

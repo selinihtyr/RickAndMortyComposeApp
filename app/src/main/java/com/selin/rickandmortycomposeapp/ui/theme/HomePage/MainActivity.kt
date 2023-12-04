@@ -70,7 +70,7 @@ fun ScreenTransition() {
         ) {
             val json = it.arguments?.getString("character")
             val character = Gson().fromJson(json, Character::class.java)
-            CharacterScreen(character)
+            CharacterScreen()
         }
         composable("episode") {
             // EpisodeScreen()
