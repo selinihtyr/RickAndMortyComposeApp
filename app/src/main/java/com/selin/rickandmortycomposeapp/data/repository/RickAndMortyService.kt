@@ -35,6 +35,10 @@ class RickAndMortyService @Inject constructor(private val rickAndMortyApi: RickA
             characterList.value = response.body()?.results
         }
     }
+    suspend fun getCharacterById(id: Int): Character {
+        val response: Response<Character> = rickAndMortyApi.getCharacterById(id)
+        return response.body()!!
+    }
 
 
     //Episode
@@ -53,6 +57,7 @@ class RickAndMortyService @Inject constructor(private val rickAndMortyApi: RickA
     fun bringLocations(): LiveData<List<Location>> {
         return locations
     }
+
     suspend fun getAllLocations() {
         val response: Response<LocationResponse> = rickAndMortyApi.allLocations()
         if (response.isSuccessful) {

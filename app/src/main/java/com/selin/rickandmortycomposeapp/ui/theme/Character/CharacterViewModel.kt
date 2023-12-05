@@ -18,9 +18,14 @@ class CharacterViewModel @Inject constructor(
     fun loadCharacters() {
         viewModelScope.launch {
             rickAndMortyRepo.getAllCharacters()
-            rickAndMortyRepo.bringCharacters().observeForever {
-                list.value = it
-            }
+            list.value = rickAndMortyRepo.bringCharacters().value
         }
+    }
+
+    fun getCharacterById(id: Int): Character {
+        viewModelScope.launch {
+            rickAndMortyRepo.getCharacterById(id)
+        }
+        return list.value!![id]
     }
 }
