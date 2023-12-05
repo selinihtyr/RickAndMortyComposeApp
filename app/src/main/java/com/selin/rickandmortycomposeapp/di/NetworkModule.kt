@@ -13,6 +13,7 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
     private const val BASE_URL = "https://rickandmortyapi.com/api/"
+
     @Singleton
     @Provides
     fun providesRefrotif(): Retrofit {

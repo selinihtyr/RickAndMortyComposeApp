@@ -32,9 +32,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.data.model.remote.Character
 import com.selin.rickandmortycomposeapp.data.model.local.CharacterHomePage
-import com.selin.rickandmortycomposeapp.ui.theme.CharacterScreen.CharacterScreen
+import com.selin.rickandmortycomposeapp.ui.theme.Character.CharacterScreen
+import com.selin.rickandmortycomposeapp.ui.theme.Episode.EpisodesScreen
+import com.selin.rickandmortycomposeapp.ui.theme.Location.LocationScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,15 +69,20 @@ fun ScreenTransition() {
             "character/{character}",
             arguments = listOf(navArgument("character") { type = NavType.StringType })
         ) {
-            val json = it.arguments?.getString("character")
-            val character = Gson().fromJson(json, Character::class.java)
+            it.arguments?.getString("character")
             CharacterScreen()
         }
-        composable("episode") {
-            // EpisodeScreen()
+        composable("episode/{episode}",
+            arguments = listOf(navArgument("episode") { type = NavType.StringType })
+        ) {
+            it.arguments?.getString("episode")
+            EpisodesScreen()
         }
-        composable("location") {
-            // LocationScreen()
+        composable("location/{location}",
+            arguments = listOf(navArgument("location") { type = NavType.StringType })
+        ) {
+            it.arguments?.getString("location")
+            LocationScreen()
         }
     }
 }
@@ -88,7 +94,6 @@ fun HomeScreen(navController: NavController) {
         CharacterHomePage(2, "Episodes", R.drawable.episodes),
         CharacterHomePage(3, "Locations", R.drawable.location)
     )
-
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -130,19 +135,17 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
-fun handleItemClick(character: CharacterHomePage, navController: NavController) {
-    val characterJson = Gson().toJson(character)
-    when (character.id) {
+fun handleItemClick(screen: CharacterHomePage, navController: NavController) {
+    val json = Gson().toJson(screen)
+    when (screen.id) {
         1 -> {
-            navController.navigate("character/$characterJson")
+            navController.navigate("character/$json")
         }
-
         2 -> {
-            navController.navigate("episode/$characterJson")
+            navController.navigate("episode/$json")
         }
-
         3 -> {
-            navController.navigate("location/$characterJson")
+            navController.navigate("location/$json")
         }
     }
 }

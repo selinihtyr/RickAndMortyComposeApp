@@ -1,30 +1,25 @@
-package com.selin.rickandmortycomposeapp.viewmodel
+package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.selin.rickandmortycomposeapp.data.model.remote.Character
-import com.selin.rickandmortycomposeapp.data.repository.RickAndMortyRepository
+import com.selin.rickandmortycomposeapp.data.repository.RickAndMortyService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RickAndMortyCharacterViewModel @Inject constructor(
-    private val rickAndMortyRepo: RickAndMortyRepository
-) : ViewModel() {
+class CharacterViewModel @Inject constructor(
+    private val rickAndMortyRepo: RickAndMortyService) : ViewModel() {
 
-    val characterList = MutableLiveData<List<Character>>()
-
-    init {
-        loadCharacters()
-    }
+    val list = MutableLiveData<List<Character>>()
 
     fun loadCharacters() {
         viewModelScope.launch {
             rickAndMortyRepo.getAllCharacters()
             rickAndMortyRepo.bringCharacters().observeForever {
-                characterList.value = it
+                list.value = it
             }
         }
     }

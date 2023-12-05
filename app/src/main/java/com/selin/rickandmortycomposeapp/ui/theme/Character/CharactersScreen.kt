@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.CharacterScreen
+package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -26,17 +26,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.viewmodel.RickAndMortyCharacterViewModel
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel()) {
+fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
     viewModel.loadCharacters()
-    val characterList = viewModel.characterList.observeAsState(listOf())
+    val list = viewModel.list.observeAsState(listOf())
 
     Scaffold(
         topBar = {
@@ -54,7 +52,6 @@ fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel())
                     Text(text = "Characters", fontSize = 32.sp, fontWeight = FontWeight.Bold)
                 })
         },
-
         content = {
             LazyColumn(
                 modifier = Modifier
@@ -62,7 +59,7 @@ fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel())
                     .padding(top = 56.dp)
             ) {
                 items(
-                    count = characterList.value!!.count(),
+                    count = list.value!!.count(),
                     itemContent = {
                         Card(
                             modifier = Modifier
@@ -80,7 +77,7 @@ fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel())
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 GlideImage(
-                                    imageModel = characterList.value!![it].image,
+                                    imageModel = list.value!![it].image,
                                     modifier = Modifier
                                         .size(100.dp)
                                         .clip(CircleShape),
@@ -88,7 +85,7 @@ fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel())
 
                                     )
                                 Text(
-                                    text = characterList.value!![it].name,
+                                    text = list.value!![it].name,
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(start = 50.dp)
@@ -100,5 +97,4 @@ fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel())
             }
         }
     )
-
 }

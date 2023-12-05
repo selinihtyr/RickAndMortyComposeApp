@@ -1,11 +1,11 @@
 package com.selin.rickandmortycomposeapp.data.model.remote
 
-data class Location(
+data class Episode(
+    val airDate: String,
+    val characters: List<String>,
     val created: String,
-    val dimension: String,
+    val episode: String,
     val id: Int,
     val name: String,
-    val residents: List<String>,
-    val type: String,
     val url: String
 )
