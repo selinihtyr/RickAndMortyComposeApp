@@ -20,7 +20,7 @@ class RickAndMortyRepository @Inject constructor(private val rickAndMortyApi: Ri
         return characterList
     }
 
-    fun getAllCharacters() {
+    suspend fun getAllCharacters() {
         rickAndMortyApi.allCharacters().enqueue(object : Callback<CharacterResponse> {
             override fun onResponse(
                 call: Call<CharacterResponse>,

@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.viewmodel.RickAndMortyCharacterViewModel
@@ -33,8 +34,8 @@ import com.skydoves.landscapist.glide.GlideImage
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CharacterScreen() {
-    val viewModel: RickAndMortyCharacterViewModel = viewModel()
+fun CharacterScreen(viewModel: RickAndMortyCharacterViewModel = hiltViewModel()) {
+    viewModel.loadCharacters()
     val characterList = viewModel.characterList.observeAsState(listOf())
 
     Scaffold(

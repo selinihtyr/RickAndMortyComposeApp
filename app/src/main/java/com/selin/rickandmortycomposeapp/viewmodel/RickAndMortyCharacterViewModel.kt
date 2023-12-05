@@ -12,16 +12,15 @@ import javax.inject.Inject
 @HiltViewModel
 class RickAndMortyCharacterViewModel @Inject constructor(
     private val rickAndMortyRepo: RickAndMortyRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
-    var characterList = MutableLiveData<List<Character>>()
+    val characterList = MutableLiveData<List<Character>>()
 
     init {
         loadCharacters()
     }
 
-    private fun loadCharacters() {
+    fun loadCharacters() {
         viewModelScope.launch {
             rickAndMortyRepo.getAllCharacters()
             rickAndMortyRepo.bringCharacters().observeForever {

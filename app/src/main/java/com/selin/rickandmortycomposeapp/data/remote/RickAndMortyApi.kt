@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface RickAndMortyApi {
     @GET("character")
-    fun allCharacters(): Call<CharacterResponse>
+    suspend fun allCharacters(): Call<CharacterResponse>
 }

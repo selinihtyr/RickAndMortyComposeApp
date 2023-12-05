@@ -15,7 +15,7 @@ object NetworkModule {
     private const val BASE_URL = "https://rickandmortyapi.com/api/"
     @Singleton
     @Provides
-    fun provideRefrotif(): Retrofit {
+    fun providesRefrotif(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -24,7 +24,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRickAndMortyApi(retrofit: Retrofit): RickAndMortyApi {
+    fun providesRickAndMortyApi(retrofit: Retrofit): RickAndMortyApi {
         return retrofit.create(RickAndMortyApi::class.java)
     }
 }
