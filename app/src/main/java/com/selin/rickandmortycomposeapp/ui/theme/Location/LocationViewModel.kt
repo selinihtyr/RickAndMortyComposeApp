@@ -11,16 +11,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
-    private val rickAndMortyService: RickAndMortyService
+    private val service: RickAndMortyService
 ) : ViewModel() {
     val list = MutableLiveData<List<Location>>()
 
     fun loadLocations() {
         viewModelScope.launch {
-            rickAndMortyService.getAllLocations()
-            rickAndMortyService.bringLocations().observeForever {
-                list.value = it
-            }
+            service.getAllLocations()
+            service.locations.value?.let { list.value = it }
         }
     }
 }

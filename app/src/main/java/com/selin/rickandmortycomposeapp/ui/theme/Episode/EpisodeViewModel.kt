@@ -11,16 +11,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EpisodeViewModel @Inject constructor(
-    private val rickAndMortyService: RickAndMortyService) : ViewModel() {
+    private val service: RickAndMortyService) : ViewModel() {
 
     val list = MutableLiveData<List<Episode>>()
 
     fun loadEpisodes() {
         viewModelScope.launch {
-            rickAndMortyService.getAllEpisodes()
-            rickAndMortyService.bringEpisodes().observeForever {
-                list.value = it
-            }
+            service.getAllEpisodes()
+            service.episodes.value?.let { list.value = it }
         }
     }
 

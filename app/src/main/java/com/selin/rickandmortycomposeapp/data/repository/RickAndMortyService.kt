@@ -14,52 +14,42 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RickAndMortyService @Inject constructor(private val rickAndMortyApi: RickAndMortyApi) {
+class RickAndMortyService @Inject constructor(private val api: RickAndMortyApi) {
 
+    // Character
     private val characterList = MutableLiveData<List<Character>>()
-    private val characters: LiveData<List<Character>> get() = characterList
+    val characters: LiveData<List<Character>> get() = characterList
 
-    private val episodeList = MutableLiveData<List<Episode>>()
-    private val episodes: LiveData<List<Episode>> get() = episodeList
-
-    private val locationList = MutableLiveData<List<Location>>()
-    private val locations: LiveData<List<Location>> get() = locationList
-
-    //Character
-    fun bringCharacters(): LiveData<List<Character>> {
-        return characters
-    }
     suspend fun getAllCharacters() {
-        val response: Response<CharacterResponse> = rickAndMortyApi.allCharacters()
+        val response: Response<CharacterResponse> = api.allCharacters()
         if (response.isSuccessful) {
             characterList.value = response.body()?.results
         }
     }
+
     suspend fun getCharacterById(id: Int): Character {
-        val response: Response<Character> = rickAndMortyApi.getCharacterById(id)
+        val response: Response<Character> = api.getCharacterById(id)
         return response.body()!!
     }
 
 
-    //Episode
-    fun bringEpisodes(): LiveData<List<Episode>> {
-        return episodes
-    }
+    // Episode
+    private val episodeList = MutableLiveData<List<Episode>>()
+    val episodes: LiveData<List<Episode>> get() = episodeList
+
     suspend fun getAllEpisodes() {
-        val response: Response<EpisodeResponse> = rickAndMortyApi.allEpisodes()
+        val response: Response<EpisodeResponse> = api.allEpisodes()
         if (response.isSuccessful) {
             episodeList.value = response.body()?.results
         }
     }
 
-
-    //Location
-    fun bringLocations(): LiveData<List<Location>> {
-        return locations
-    }
+    // Location
+    private val locationList = MutableLiveData<List<Location>>()
+    val locations: LiveData<List<Location>> get() = locationList
 
     suspend fun getAllLocations() {
-        val response: Response<LocationResponse> = rickAndMortyApi.allLocations()
+        val response: Response<LocationResponse> = api.allLocations()
         if (response.isSuccessful) {
             locationList.value = response.body()?.results
         }

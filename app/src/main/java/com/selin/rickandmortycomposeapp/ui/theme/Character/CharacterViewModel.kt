@@ -11,21 +11,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val rickAndMortyRepo: RickAndMortyService) : ViewModel() {
+    private val service: RickAndMortyService
+) : ViewModel() {
 
-    val list = MutableLiveData<List<Character>>()
+    private val _list = MutableLiveData<List<Character>>()
+    val list: MutableLiveData<List<Character>> get() = _list
 
     fun loadCharacters() {
         viewModelScope.launch {
-            rickAndMortyRepo.getAllCharacters()
-            list.value = rickAndMortyRepo.bringCharacters().value
+            service.getAllCharacters()
+            _list.value = service.characters.value
         }
     }
 
-    fun getCharacterById(id: Int): Character {
+    suspend fun getCharacterById(id: Int): Character {
         viewModelScope.launch {
-            rickAndMortyRepo.getCharacterById(id)
+            service.getCharacterById(id)
         }
-        return list.value!![id]
+        // LiveData değerine direkt erişme, observe et
+        return _list.value?.get(id) ?: throw NoSuchElementException("Character not found")
     }
 }
