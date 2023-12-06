@@ -7,10 +7,15 @@ import com.selin.rickandmortycomposeapp.data.model.response.LocationResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RickAndMortyApi {
     @GET("character")
     suspend fun allCharacters(): Response<CharacterResponse>
+    @GET("character")
+    suspend fun charactersByPage(@Query("page") page: Int): Response<CharacterResponse>
+
+
     @GET("character/{id}")
     suspend fun getCharacterById(@Path("id") id: Int): Response<Character>
     @GET("episode")

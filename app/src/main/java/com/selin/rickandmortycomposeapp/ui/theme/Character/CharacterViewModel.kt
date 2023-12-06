@@ -1,5 +1,6 @@
 package com.selin.rickandmortycomposeapp.ui.theme.Character
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,20 +16,19 @@ class CharacterViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _list = MutableLiveData<List<Character>>()
-    val list: MutableLiveData<List<Character>> get() = _list
+    val list: LiveData<List<Character>> get() = _list
 
     fun loadCharacters() {
         viewModelScope.launch {
-            service.getAllCharacters()
-            _list.value = service.characters.value
+            _list.value = service.getAllCharacters()
         }
     }
+
 
     suspend fun getCharacterById(id: Int): Character {
         viewModelScope.launch {
             service.getCharacterById(id)
         }
-        // LiveData değerine direkt erişme, observe et
         return _list.value?.get(id) ?: throw NoSuchElementException("Character not found")
     }
 }

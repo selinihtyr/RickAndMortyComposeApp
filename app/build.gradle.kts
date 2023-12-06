@@ -96,7 +96,12 @@ dependencies {
     //Glide
     implementation("com.github.skydoves:landscapist-glide:1.3.7")
 
+    //Coil
     implementation ("io.coil-kt:coil-compose:2.4.0")
+
+    //Pageble
+    implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation("androidx.paging:paging-runtime:3.3.0-alpha02")
 }
 
 kapt {

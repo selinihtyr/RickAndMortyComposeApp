@@ -1,6 +1,7 @@
 package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +35,11 @@ import com.skydoves.landscapist.glide.GlideImage
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
+
     viewModel.loadCharacters()
-    val list = viewModel.list.observeAsState(listOf())
+
+    val list = viewModel.list.observeAsState(emptyList())
+    Log.d("CharacterScreen", "List Size: ${list.value.size}")
 
     Scaffold(
         topBar = {
@@ -59,7 +64,7 @@ fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
                     .padding(top = 56.dp)
             ) {
                 items(
-                    count = list.value!!.count(),
+                    count = list.value.size,
                     itemContent = {
                         Card(
                             modifier = Modifier
@@ -81,11 +86,9 @@ fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
                                     modifier = Modifier
                                         .size(100.dp)
                                         .clip(CircleShape),
-                                    contentDescription = "Character Image",
-
-                                    )
+                                    contentDescription = "Character Image",                                )
                                 Text(
-                                    text = list.value!![it].name,
+                                    text = list.value[it].name,
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(start = 50.dp)

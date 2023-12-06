@@ -1,5 +1,6 @@
 package com.selin.rickandmortycomposeapp.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.selin.rickandmortycomposeapp.data.model.remote.Character
@@ -9,6 +10,9 @@ import com.selin.rickandmortycomposeapp.data.model.response.CharacterResponse
 import com.selin.rickandmortycomposeapp.data.model.response.EpisodeResponse
 import com.selin.rickandmortycomposeapp.data.model.response.LocationResponse
 import com.selin.rickandmortycomposeapp.data.remote.RickAndMortyApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,16 +20,26 @@ import javax.inject.Singleton
 @Singleton
 class RickAndMortyService @Inject constructor(private val api: RickAndMortyApi) {
 
-    // Character
-    private val characterList = MutableLiveData<List<Character>>()
-    val characters: LiveData<List<Character>> get() = characterList
+    suspend fun getAllCharacters(): List<Character> {
+        val firstPageResponse = api.allCharacters()
 
-    suspend fun getAllCharacters() {
-        val response: Response<CharacterResponse> = api.allCharacters()
-        if (response.isSuccessful) {
-            characterList.value = response.body()?.results
+        if (firstPageResponse.isSuccessful) {
+            val totalPages = firstPageResponse.body()?.info?.pages ?: 0
+            val allCharacters = mutableListOf<Character>()
+
+            for (i in 1..totalPages) {
+                val pageResponse = api.charactersByPage(i)
+                if (pageResponse.isSuccessful) {
+                    allCharacters.addAll(pageResponse.body()?.results ?: emptyList())
+                }
+            }
+
+            return allCharacters
         }
+        return emptyList()
     }
+
+
 
     suspend fun getCharacterById(id: Int): Character {
         val response: Response<Character> = api.getCharacterById(id)
