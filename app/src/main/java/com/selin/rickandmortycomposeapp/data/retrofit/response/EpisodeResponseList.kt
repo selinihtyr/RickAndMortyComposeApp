@@ -1,6 +1,6 @@
-package com.selin.rickandmortycomposeapp.data.model.remote
+package com.selin.rickandmortycomposeapp.data.retrofit.response
 
-data class Episode(
+data class EpisodeResponseList(
     val airDate: String,
     val characters: List<String>,
     val created: String,

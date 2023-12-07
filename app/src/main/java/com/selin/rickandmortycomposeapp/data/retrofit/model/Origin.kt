@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.data.model.remote
+package com.selin.rickandmortycomposeapp.data.retrofit.model
 
 data class Origin(
     val name: String,

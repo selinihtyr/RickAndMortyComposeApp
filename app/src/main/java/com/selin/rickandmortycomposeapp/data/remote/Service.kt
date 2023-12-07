@@ -1,15 +1,15 @@
 package com.selin.rickandmortycomposeapp.data.remote
 
-import com.selin.rickandmortycomposeapp.data.model.remote.Character
-import com.selin.rickandmortycomposeapp.data.model.response.CharacterResponse
-import com.selin.rickandmortycomposeapp.data.model.response.EpisodeResponse
-import com.selin.rickandmortycomposeapp.data.model.response.LocationResponse
+import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
+import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponse
+import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponse
+import com.selin.rickandmortycomposeapp.data.retrofit.response.LocationResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface RickAndMortyApi {
+interface Service {
     @GET("character")
     suspend fun allCharacters(): Response<CharacterResponse>
 
@@ -17,7 +17,7 @@ interface RickAndMortyApi {
     suspend fun charactersByPage(@Query("page") page: Int): Response<CharacterResponse>
 
     @GET("character/{id}")
-    suspend fun getCharacterById(@Path("id") id: Int): Response<Character>
+    suspend fun getCharacterById(@Path("id") id: Int): Response<CharacterResponseList>
 
     @GET("episode")
     suspend fun allEpisodes(): Response<EpisodeResponse>

@@ -1,6 +1,6 @@
-package com.selin.rickandmortycomposeapp.data.model.remote
+package com.selin.rickandmortycomposeapp.data.retrofit.response
 
-data class Location(
+data class LocationResponseList(
     val created: String,
     val dimension: String,
     val id: Int,

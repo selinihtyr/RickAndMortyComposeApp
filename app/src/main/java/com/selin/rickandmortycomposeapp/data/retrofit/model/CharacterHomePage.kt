@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.data.model.local
+package com.selin.rickandmortycomposeapp.data.retrofit.model
 
 data class CharacterHomePage(
     val id: Int,

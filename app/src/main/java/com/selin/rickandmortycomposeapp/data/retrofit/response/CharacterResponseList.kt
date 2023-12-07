@@ -1,6 +1,9 @@
-package com.selin.rickandmortycomposeapp.data.model.remote
+package com.selin.rickandmortycomposeapp.data.retrofit.response
 
-data class Character(
+import com.selin.rickandmortycomposeapp.data.retrofit.model.CharacterLocation
+import com.selin.rickandmortycomposeapp.data.retrofit.model.Origin
+
+data class CharacterResponseList(
     val created: String,
     val episode: List<String>,
     val gender: String,

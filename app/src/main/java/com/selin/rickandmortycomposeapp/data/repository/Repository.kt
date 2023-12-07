@@ -1,22 +1,22 @@
 package com.selin.rickandmortycomposeapp.data.repository
 
-import com.selin.rickandmortycomposeapp.data.model.remote.Character
-import com.selin.rickandmortycomposeapp.data.model.remote.Episode
-import com.selin.rickandmortycomposeapp.data.model.remote.Location
-import com.selin.rickandmortycomposeapp.data.remote.RickAndMortyApi
+import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
+import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
+import com.selin.rickandmortycomposeapp.data.retrofit.response.LocationResponseList
+import com.selin.rickandmortycomposeapp.data.remote.Service
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RickAndMortyService @Inject constructor(private val api: RickAndMortyApi) {
+class Repository @Inject constructor(private val api: Service) {
 
-    suspend fun getAllCharacters(): List<Character> {
+    suspend fun getAllCharacters(): List<CharacterResponseList> {
         val firstPageResponse = api.allCharacters()
 
         if (firstPageResponse.isSuccessful) {
             val totalPages = firstPageResponse.body()?.info?.pages ?: 0
-            val allCharacters = mutableListOf<Character>()
+            val allCharacters = mutableListOf<CharacterResponseList>()
 
             for (i in 1..totalPages) {
                 val pageResponse = api.charactersByPage(i)
@@ -30,19 +30,19 @@ class RickAndMortyService @Inject constructor(private val api: RickAndMortyApi) 
         return emptyList()
     }
 
-    suspend fun getCharacterById(id: Int): Character {
-        val response: Response<Character> = api.getCharacterById(id)
+    suspend fun getCharacterById(id: Int): CharacterResponseList {
+        val response: Response<CharacterResponseList> = api.getCharacterById(id)
         return response.body()!!
     }
 
 
     // Episode
-    suspend fun getAllEpisodes(): List<Episode> {
+    suspend fun getAllEpisodes(): List<EpisodeResponseList> {
         val firstPageResponse = api.allEpisodes()
 
         if (firstPageResponse.isSuccessful) {
             val totalPages = firstPageResponse.body()?.info?.pages ?: 0
-            val allEpisode = mutableListOf<Episode>()
+            val allEpisode = mutableListOf<EpisodeResponseList>()
 
             for (i in 1..totalPages) {
                 val pageResponse = api.episodesByPage(i)
@@ -57,12 +57,12 @@ class RickAndMortyService @Inject constructor(private val api: RickAndMortyApi) 
     }
 
     // Location
-    suspend fun getAllLocations(): List<Location> {
+    suspend fun getAllLocations(): List<LocationResponseList> {
         val firstPageResponse = api.allLocations()
 
         if (firstPageResponse.isSuccessful) {
             val totalPages = firstPageResponse.body()?.info?.pages ?: 0
-            val allLocation = mutableListOf<Location>()
+            val allLocation = mutableListOf<LocationResponseList>()
 
             for (i in 1..totalPages) {
                 val pageResponse = api.locationsByPage(i)
