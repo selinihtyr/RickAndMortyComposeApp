@@ -72,13 +72,15 @@ fun ScreenTransition() {
             it.arguments?.getString("character")
             CharacterScreen()
         }
-        composable("episode/{episode}",
+        composable(
+            "episode/{episode}",
             arguments = listOf(navArgument("episode") { type = NavType.StringType })
         ) {
             it.arguments?.getString("episode")
             EpisodesScreen()
         }
-        composable("location/{location}",
+        composable(
+            "location/{location}",
             arguments = listOf(navArgument("location") { type = NavType.StringType })
         ) {
             it.arguments?.getString("location")
@@ -141,9 +143,11 @@ fun handleItemClick(screen: CharacterHomePage, navController: NavController) {
         1 -> {
             navController.navigate("character/$json")
         }
+
         2 -> {
             navController.navigate("episode/$json")
         }
+
         3 -> {
             navController.navigate("location/$json")
         }

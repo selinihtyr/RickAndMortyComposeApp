@@ -7,23 +7,31 @@ import androidx.lifecycle.viewModelScope
 import com.selin.rickandmortycomposeapp.data.model.remote.Character
 import com.selin.rickandmortycomposeapp.data.repository.RickAndMortyService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterViewModel @Inject constructor(
-    private val service: RickAndMortyService
-) : ViewModel() {
+class CharacterViewModel @Inject constructor(private val service: RickAndMortyService) : ViewModel() {
+
+    private val _loadingState = MutableStateFlow(true)
+    val loadingState: StateFlow<Boolean> get() = _loadingState
 
     private val _list = MutableLiveData<List<Character>>()
     val list: LiveData<List<Character>> get() = _list
 
     fun loadCharacters() {
         viewModelScope.launch {
-            _list.value = service.getAllCharacters()
+            try {
+                _loadingState.value = true
+                _list.value = service.getAllCharacters()
+            } finally {
+                _loadingState.value = false
+            }
         }
     }
-
 
     suspend fun getCharacterById(id: Int): Character {
         viewModelScope.launch {
