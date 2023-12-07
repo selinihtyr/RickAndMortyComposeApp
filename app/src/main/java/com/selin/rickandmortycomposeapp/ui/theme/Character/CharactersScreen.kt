@@ -42,9 +42,9 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
     val loadingState by viewModel.loadingState.collectAsState()
-    val list = viewModel.list.observeAsState(emptyList())
+    val list = viewModel.list.observeAsState(listOf())
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = true) {
         viewModel.loadCharacters()
     }
 

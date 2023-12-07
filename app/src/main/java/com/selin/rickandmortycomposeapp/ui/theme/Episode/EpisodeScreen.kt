@@ -53,7 +53,7 @@ fun EpisodesScreen(viewModel: EpisodeViewModel = hiltViewModel()) {
                     .padding(top = 56.dp)
             ) {
                 items(
-                    count = list.value!!.count(),
+                    count = list.value.count(),
                     itemContent = {
                         Card(modifier = Modifier
                             .fillMaxWidth()
@@ -62,7 +62,7 @@ fun EpisodesScreen(viewModel: EpisodeViewModel = hiltViewModel()) {
 
                             }) {
                             Text(
-                                text = list.value!![it].episode,
+                                text = list.value[it].episode,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(8.dp)

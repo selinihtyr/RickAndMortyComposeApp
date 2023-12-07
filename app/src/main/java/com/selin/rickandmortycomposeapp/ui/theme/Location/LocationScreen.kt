@@ -53,7 +53,7 @@ fun LocationScreen(viewModel: LocationViewModel = hiltViewModel()) {
                     .padding(top = 56.dp)
             ) {
                 items(
-                    count = list.value!!.count(),
+                    count = list.value.count(),
                     itemContent = {
                         Card(modifier = Modifier
                             .fillMaxSize()
@@ -64,12 +64,12 @@ fun LocationScreen(viewModel: LocationViewModel = hiltViewModel()) {
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
                                 Text(
-                                    text = list.value!![it].name,
+                                    text = list.value[it].name,
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = list.value!![it].type,
+                                    text = list.value[it].type,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )

@@ -1,5 +1,6 @@
 package com.selin.rickandmortycomposeapp.ui.theme.Location
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,12 +14,12 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(
     private val service: RickAndMortyService
 ) : ViewModel() {
-    val list = MutableLiveData<List<Location>>()
+    private val _list = MutableLiveData<List<Location>>()
+    val list: LiveData<List<Location>> get() = _list
 
     fun loadLocations() {
         viewModelScope.launch {
-            service.getAllLocations()
-            service.locations.value?.let { list.value = it }
+            _list.value = service.getAllLocations()
         }
     }
 }

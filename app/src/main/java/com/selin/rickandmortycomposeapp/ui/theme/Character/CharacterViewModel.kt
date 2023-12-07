@@ -14,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterViewModel @Inject constructor(private val service: RickAndMortyService) : ViewModel() {
+class CharacterViewModel @Inject constructor(
+    private val service: RickAndMortyService
+) : ViewModel() {
 
     private val _loadingState = MutableStateFlow(true)
     val loadingState: StateFlow<Boolean> get() = _loadingState
@@ -33,10 +35,11 @@ class CharacterViewModel @Inject constructor(private val service: RickAndMortySe
         }
     }
 
-    suspend fun getCharacterById(id: Int): Character {
+
+    /*suspend fun getCharacterById(id: Int): Character {
         viewModelScope.launch {
             service.getCharacterById(id)
         }
         return _list.value?.get(id) ?: throw NoSuchElementException("Character not found")
-    }
+    }*/
 }
