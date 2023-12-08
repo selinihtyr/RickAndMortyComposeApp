@@ -1,6 +1,6 @@
 package com.selin.rickandmortycomposeapp.di
 
-import com.selin.rickandmortycomposeapp.data.remote.RickAndMortyApi
+import com.selin.rickandmortycomposeapp.data.remote.Service
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +25,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRickAndMortyApi(retrofit: Retrofit): RickAndMortyApi {
-        return retrofit.create(RickAndMortyApi::class.java)
+    fun providesRickAndMortyApi(retrofit: Retrofit): Service {
+        return retrofit.create(Service::class.java)
     }
 }

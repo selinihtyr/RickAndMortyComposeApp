@@ -1,7 +1,11 @@
 package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -32,15 +36,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.selin.rickandmortycomposeapp.R
+import com.selin.rickandmortycomposeapp.ui.theme.HomePage.ScreenTransition
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
 import com.skydoves.landscapist.glide.GlideImage
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
+fun CharacterScreen(navController: NavController ,viewModel: CharacterViewModel = hiltViewModel()) {
     val loadingState by viewModel.loadingState.collectAsState()
     val list = viewModel.list.observeAsState(listOf())
 
@@ -53,7 +62,7 @@ fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigate("home")
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
@@ -82,7 +91,7 @@ fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
                                     .fillMaxWidth()
                                     .padding(8.dp)
                                     .clickable {
-
+                                        navController.navigate("detailScreen/${list.value[it].id}")
                                     }
                             ) {
                                 Row(

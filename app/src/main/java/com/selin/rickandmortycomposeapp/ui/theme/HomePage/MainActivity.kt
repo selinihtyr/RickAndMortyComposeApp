@@ -32,8 +32,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.data.model.local.CharacterHomePage
+import com.selin.rickandmortycomposeapp.data.retrofit.model.CharacterHomePage
 import com.selin.rickandmortycomposeapp.ui.theme.Character.CharacterScreen
+import com.selin.rickandmortycomposeapp.ui.theme.Character.DetailScreen
 import com.selin.rickandmortycomposeapp.ui.theme.Episode.EpisodesScreen
 import com.selin.rickandmortycomposeapp.ui.theme.Location.LocationScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
@@ -70,7 +71,14 @@ fun ScreenTransition() {
             arguments = listOf(navArgument("character") { type = NavType.StringType })
         ) {
             it.arguments?.getString("character")
-            CharacterScreen()
+            CharacterScreen(navController = navController)
+        }
+        composable(
+            "detailScreen/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            it.arguments?.getInt("id")
+            DetailScreen()
         }
         composable(
             "episode/{episode}",
