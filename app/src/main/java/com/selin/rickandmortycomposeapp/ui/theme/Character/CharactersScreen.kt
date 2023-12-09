@@ -1,11 +1,6 @@
 package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,13 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.selin.rickandmortycomposeapp.R
-import com.selin.rickandmortycomposeapp.ui.theme.HomePage.ScreenTransition
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
 import com.skydoves.landscapist.glide.GlideImage
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,38 +108,42 @@ fun CharacterScreen(navController: NavController ,viewModel: CharacterViewModel 
                     )
                 }
                 if (loadingState) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 56.dp)
-                    ) {
-                        items(
-                            count = 10,
-                            itemContent = {
-                                Card(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                ) {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(8.dp)
-                                            .background(brush = ShimmerEffect())
-                                    ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .size(100.dp)
-                                                .clip(CircleShape)
-                                                .background(brush = ShimmerEffect())
-                                        )
-                                    }
-                                }
-                            }
-                        )
-                    }
+                    Effect()
                 }
             }
         }
     )
+}
+@Composable
+fun Effect() {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 56.dp)
+    ) {
+        items(
+            count = 10,
+            itemContent = {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
+                            .background(brush = ShimmerEffect())
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .background(brush = ShimmerEffect())
+                        )
+                    }
+                }
+            }
+        )
+    }
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -35,6 +36,7 @@ import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.model.CharacterHomePage
 import com.selin.rickandmortycomposeapp.ui.theme.Character.CharacterScreen
 import com.selin.rickandmortycomposeapp.ui.theme.Character.DetailScreen
+import com.selin.rickandmortycomposeapp.ui.theme.Character.EpisodesFromDetailScreen
 import com.selin.rickandmortycomposeapp.ui.theme.Episode.EpisodesScreen
 import com.selin.rickandmortycomposeapp.ui.theme.Location.LocationScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
@@ -78,7 +80,13 @@ fun ScreenTransition() {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
             it.arguments?.getInt("id")
-            DetailScreen()
+            DetailScreen(characterId = it.arguments?.getInt("id") ?: 0, navController = navController)
+        }
+        composable("episodesFromDetailScreen/{id}") {
+            it.arguments?.getInt("episode")
+            EpisodesFromDetailScreen(
+                characterId = it.arguments?.getInt("episode") ?: 0,
+                viewModel = hiltViewModel())
         }
         composable(
             "episode/{episode}",

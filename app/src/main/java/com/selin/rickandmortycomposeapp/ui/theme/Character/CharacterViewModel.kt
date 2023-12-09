@@ -10,12 +10,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val service: Repository
+    private val repo: Repository
 ) : ViewModel() {
 
     private val _loadingState = MutableStateFlow(true)
@@ -28,17 +29,24 @@ class CharacterViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _loadingState.value = true
-                _list.value = service.getAllCharacters()
+                _list.value = repo.getAllCharacters()
             } finally {
                 _loadingState.value = false
             }
         }
     }
 
-    fun getCharacterById(id: Int): CharacterResponseList {
-        viewModelScope.launch {
-            service.getCharacterById(id)
+    suspend fun getCharacterById(id: Int): CharacterResponseList {
+        try {
+            val response = repo.getCharacterById(id)
+            if (response.isSuccessful) {
+                return response.body() ?: throw NoSuchElementException("Character not found")
+            } else {
+                throw IOException("Error getting character. HTTP ${response.code()}")
+            }
+        } catch (e: Exception) {
+            throw e
         }
-        return _list.value?.get(id) ?: throw NoSuchElementException("Character not found")
     }
+
 }
