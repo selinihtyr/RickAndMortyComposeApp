@@ -35,10 +35,11 @@ import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
 import com.skydoves.landscapist.glide.GlideImage
+
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CharacterScreen(navController: NavController ,viewModel: CharacterViewModel = hiltViewModel()) {
+fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel = hiltViewModel()) {
     val loadingState by viewModel.loadingState.collectAsState()
     val list = viewModel.list.observeAsState(listOf())
 
@@ -114,6 +115,7 @@ fun CharacterScreen(navController: NavController ,viewModel: CharacterViewModel 
         }
     )
 }
+
 @Composable
 fun Effect() {
     LazyColumn(

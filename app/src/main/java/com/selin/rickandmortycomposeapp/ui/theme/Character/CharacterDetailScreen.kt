@@ -2,7 +2,6 @@ package com.selin.rickandmortycomposeapp.ui.theme.Character
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,12 +36,15 @@ import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponse
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun DetailScreen(navController: NavController, characterId: Int, viewModel: CharacterViewModel = hiltViewModel()) {
+fun DetailScreen(
+    navController: NavController,
+    characterId: Int,
+    viewModel: CharacterViewModel = hiltViewModel()
+) {
     val character = remember { mutableStateOf<CharacterResponseList?>(null) }
 
     LaunchedEffect(characterId) {
         character.value = viewModel.getCharacterById(characterId)
-        Log.d("DetailScreen", "DetailScreen: ${character.value}")
     }
 
     LazyColumn(
@@ -174,11 +175,13 @@ fun DetailScreen(navController: NavController, characterId: Int, viewModel: Char
                 .fillMaxSize()
                 .padding(start = 24.dp, end = 24.dp, top = 4.dp)
                 .clickable {
-                    Log.d("DetailScreen", "DetailScreen: ${character.value?.episode}")
                     val episodeIds = character.value?.episode?.map {
-                        it.substringAfterLast("/").toInt()
+                        it
+                            .substringAfterLast("/")
+                            .toInt()
                     } ?: emptyList()
-                    navController.navigate("episodesFromDetailScreen/${episodeIds.joinToString(",")}")
+                    navController.navigate("episode/{id}")
+                    Log.d("EpisodeIds", episodeIds.joinToString(","))
                 }) {
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,

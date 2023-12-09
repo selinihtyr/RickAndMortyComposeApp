@@ -83,24 +83,26 @@ fun ScreenTransition() {
             DetailScreen(characterId = it.arguments?.getInt("id") ?: 0, navController = navController)
         }
         composable("episodesFromDetailScreen/{id}") {
-            it.arguments?.getInt("episode")
-            EpisodesFromDetailScreen(
-                characterId = it.arguments?.getInt("episode") ?: 0,
-                viewModel = hiltViewModel())
+            it.arguments?.getInt("id")?.let { episodeId ->
+                EpisodesFromDetailScreen(
+                    id = episodeId,
+                    viewModel = hiltViewModel()
+                )
+            }
         }
         composable(
             "episode/{episode}",
             arguments = listOf(navArgument("episode") { type = NavType.StringType })
         ) {
             it.arguments?.getString("episode")
-            EpisodesScreen()
+            EpisodesScreen(navController)
         }
         composable(
             "location/{location}",
             arguments = listOf(navArgument("location") { type = NavType.StringType })
         ) {
             it.arguments?.getString("location")
-            LocationScreen()
+            LocationScreen(navController)
         }
     }
 }

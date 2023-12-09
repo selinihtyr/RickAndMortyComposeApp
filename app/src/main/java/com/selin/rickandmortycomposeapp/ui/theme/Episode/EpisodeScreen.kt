@@ -21,12 +21,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun EpisodesScreen(viewModel: EpisodeViewModel = hiltViewModel()) {
+fun EpisodesScreen(navController: NavController, viewModel: EpisodeViewModel = hiltViewModel()) {
     viewModel.loadEpisodes()
     val list = viewModel.list.observeAsState(listOf())
 
@@ -35,7 +36,7 @@ fun EpisodesScreen(viewModel: EpisodeViewModel = hiltViewModel()) {
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigate("home")
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
