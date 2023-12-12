@@ -22,20 +22,16 @@ class EpisodeViewModel @Inject constructor(
     private val _list = MutableLiveData<List<EpisodeResponseList>>()
     val list: LiveData<List<EpisodeResponseList>> get() = _list
 
-    suspend fun getEpisodesById(episodeId: Int): Response<EpisodeResponseList> {
+    suspend fun getEpisodesIds(ids: List<Int>): Response<EpisodeResponseList> {
         try {
-            val response = repo.getEpisodesById(episodeId)
+            val response = repo.getEpisodesIds(ids)
             if (response.isSuccessful) {
                 return response
             } else {
-                Log.e("API_ERROR", "Error getting episode. HTTP ${response.code()}")
-                // Handle the error gracefully
-                return Response.error(response.code(), response.errorBody()!!)
+                throw IOException("Error getting character. HTTP ${response.code()}")
             }
         } catch (e: Exception) {
-            Log.e("API_ERROR", "Exception: ${e.message}")
-            // Handle the error gracefully
-            return Response.error(500, "Internal Server Error".toResponseBody())
+            throw e
         }
     }
 
