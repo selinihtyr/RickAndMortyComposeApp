@@ -29,12 +29,9 @@ class Repository @Inject constructor(private val service: Service) {
         }
         return emptyList()
     }
-
     suspend fun getCharacterById(id: Int): Response<CharacterResponseList> {
         return service.getCharacterById(id)
     }
-
-
     // Episode
     suspend fun getAllEpisodes(): List<EpisodeResponseList> {
         val firstPageResponse = service.allEpisodes()
@@ -53,11 +50,12 @@ class Repository @Inject constructor(private val service: Service) {
         }
         return emptyList()
     }
-
-    suspend fun getEpisodesById(episodeId: Int): Response<EpisodeResponseList> {
-        return service.getEpisodesById(episodeId)
+    suspend fun getEpisodeById(id: Int): Response<EpisodeResponseList> {
+        return service.getEpisodeById(id)
     }
-
+    suspend fun getEpisodesByIds(ids: List<Int>): Response<List<EpisodeResponseList>> {
+        return service.getEpisodesByIds(ids)
+    }
     // Location
     suspend fun getAllLocations(): List<LocationResponseList> {
         val firstPageResponse = service.allLocations()

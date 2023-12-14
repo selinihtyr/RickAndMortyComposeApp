@@ -1,7 +1,6 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Episode
+package com.selin.rickandmortycomposeapp.ui.theme.episode
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,19 +10,23 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
 
 @Composable
 fun EpisodesFromDetailScreen(
-    ids : List<Int>,
-    viewModel: EpisodeViewModel = hiltViewModel()) {
+    navController: NavController,
+    ids: List<Int>,
+    viewModel: EpisodeViewModel = hiltViewModel()
+) {
     val episode = remember { mutableStateOf<List<EpisodeResponseList>?>(null) }
 
 
@@ -31,14 +34,13 @@ fun EpisodesFromDetailScreen(
         val response = viewModel.getEpisodesIds(ids)
         if (response.isSuccessful) {
             // Assuming the API returns a single EpisodeResponseList, not a list
-            episode.value = listOf(response.body()!!)
+            episode.value = response.body()!!
         } else {
             // Handle the error case here
         }
     }
 
     LazyColumn(
-        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
@@ -48,17 +50,23 @@ fun EpisodesFromDetailScreen(
                 val currentEpisode = episode.value?.get(index)
                 Card(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(6.dp)
                         .fillMaxWidth()
+                        .clickable {
+                            navController.navigate("episodeDetail/${currentEpisode?.id}")
+                        }
                 ) {
                     Row {
                         Text(
                             text = currentEpisode?.episode.toString(),
-                            modifier = Modifier.padding(8.dp)
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(10.dp)
                         )
                         Text(
                             text = currentEpisode?.name.toString(),
-                            modifier = Modifier.padding(8.dp)
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(10.dp)
                         )
                     }
                 }

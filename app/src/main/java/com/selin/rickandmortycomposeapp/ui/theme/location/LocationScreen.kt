@@ -1,11 +1,9 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Episode
+package com.selin.rickandmortycomposeapp.ui.theme.location
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -17,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,8 +27,8 @@ import com.selin.rickandmortycomposeapp.R
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun EpisodesScreen(navController: NavController, viewModel: EpisodeViewModel = hiltViewModel()) {
-    viewModel.loadEpisodes()
+fun LocationScreen(navController: NavController, viewModel: LocationViewModel = hiltViewModel()) {
+    viewModel.loadLocations()
     val list = viewModel.list.observeAsState(listOf())
 
     Scaffold(
@@ -43,11 +40,11 @@ fun EpisodesScreen(navController: NavController, viewModel: EpisodeViewModel = h
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
-                            contentDescription = "Localized description"
+                            contentDescription = ""
                         )
                     }
                 }, title = {
-                    Text(text = "Episodes", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Locations", fontSize = 32.sp, fontWeight = FontWeight.Bold)
                 })
         },
         content = {
@@ -60,29 +57,22 @@ fun EpisodesScreen(navController: NavController, viewModel: EpisodeViewModel = h
                     count = list.value.count(),
                     itemContent = {
                         Card(modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxSize()
                             .padding(8.dp)
                             .clickable {
 
-                            }) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
+                            }
+                        ) {
+                            Column(modifier = Modifier.padding(8.dp)) {
                                 Text(
                                     text = list.value[it].name,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(8.dp)
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = list.value[it].episode,
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(8.dp)
+                                    text = list.value[it].type,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Normal
                                 )
                             }
                         }

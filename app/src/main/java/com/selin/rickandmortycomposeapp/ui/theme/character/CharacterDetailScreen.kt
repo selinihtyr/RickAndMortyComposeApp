@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Character
+package com.selin.rickandmortycomposeapp.ui.theme.character
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -180,7 +180,7 @@ fun DetailScreen(
                             .substringAfterLast("/")
                             .toInt()
                     } ?: emptyList()
-                    navController.navigate("episode/{id}")
+                    navController.navigate("episodesFromCharacter/${episodeIds.joinToString(",")}")
                     Log.d("EpisodeIds", episodeIds.joinToString(","))
                 }) {
                 Column(

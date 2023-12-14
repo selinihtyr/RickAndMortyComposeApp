@@ -11,8 +11,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Service {
-    @GET("character/{id}")
-    suspend fun getEpisodesByCharacterId(@Path("id") characterId: Int): Response<CharacterResponseList>
     @GET("character")
     suspend fun allCharacters(): Response<CharacterResponse>
 
@@ -26,9 +24,10 @@ interface Service {
     suspend fun allEpisodes(): Response<EpisodeResponse>
     @GET("episode")
     suspend fun episodeByPage(@Query("page") page: Int): Response<EpisodeResponse>
-
     @GET("episode/{id}")
-    suspend fun getEpisodesById(@Path("id") episodeId: Int): Response<EpisodeResponseList>
+    suspend fun getEpisodeById(@Path("id") id: Int): Response<EpisodeResponseList>
+    @GET("episode/{ids}")
+    suspend fun getEpisodesByIds(@Path("ids") characterId: List<Int>): Response<List<EpisodeResponseList>>
 
     @GET("location")
     suspend fun allLocations(): Response<LocationResponse>

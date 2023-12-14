@@ -1,6 +1,5 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Episode
+package com.selin.rickandmortycomposeapp.ui.theme.episode
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import com.selin.rickandmortycomposeapp.data.repository.Repository
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -22,9 +20,26 @@ class EpisodeViewModel @Inject constructor(
     private val _list = MutableLiveData<List<EpisodeResponseList>>()
     val list: LiveData<List<EpisodeResponseList>> get() = _list
 
-    suspend fun getEpisodesIds(ids: List<Int>): Response<EpisodeResponseList> {
+    fun loadEpisodes() {
+        viewModelScope.launch {
+            _list.value = repo.getAllEpisodes()
+        }
+    }
+    suspend fun getEpisodeById(id: Int): EpisodeResponseList {
         try {
-            val response = repo.getEpisodesIds(ids)
+            val response = repo.getEpisodeById(id)
+            if (response.isSuccessful) {
+                return response.body() ?: throw NoSuchElementException("Episode not found")
+            } else {
+                throw IOException("Error getting episode. HTTP ${response.code()}")
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+    suspend fun getEpisodesIds(ids: List<Int>): Response<List<EpisodeResponseList>> {
+        try {
+            val response = repo.getEpisodesByIds(ids)
             if (response.isSuccessful) {
                 return response
             } else {
@@ -32,12 +47,6 @@ class EpisodeViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             throw e
-        }
-    }
-
-    fun loadEpisodes() {
-        viewModelScope.launch {
-            _list.value = repo.getAllEpisodes()
         }
     }
 }

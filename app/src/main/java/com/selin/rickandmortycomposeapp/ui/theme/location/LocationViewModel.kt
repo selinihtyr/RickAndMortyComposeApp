@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Location
+package com.selin.rickandmortycomposeapp.ui.theme.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

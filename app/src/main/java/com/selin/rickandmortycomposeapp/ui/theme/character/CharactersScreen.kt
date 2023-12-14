@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Character
+package com.selin.rickandmortycomposeapp.ui.theme.character
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -81,7 +81,7 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
                                     .fillMaxWidth()
                                     .padding(8.dp)
                                     .clickable {
-                                        navController.navigate("detailScreen/${list.value[it].id}")
+                                        navController.navigate("characterDetailScreen/${list.value[it].id}")
                                     }
                             ) {
                                 Row(

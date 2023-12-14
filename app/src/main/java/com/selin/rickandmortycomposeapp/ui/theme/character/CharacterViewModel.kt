@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.Character
+package com.selin.rickandmortycomposeapp.ui.theme.character
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

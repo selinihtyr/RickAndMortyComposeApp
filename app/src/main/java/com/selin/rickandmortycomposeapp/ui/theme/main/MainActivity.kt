@@ -1,4 +1,4 @@
-package com.selin.rickandmortycomposeapp.ui.theme.HomePage
+package com.selin.rickandmortycomposeapp.ui.theme.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,11 +34,12 @@ import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.model.CharacterHomePage
-import com.selin.rickandmortycomposeapp.ui.theme.Character.CharacterScreen
-import com.selin.rickandmortycomposeapp.ui.theme.Character.DetailScreen
-import com.selin.rickandmortycomposeapp.ui.theme.Character.EpisodesFromDetailScreen
-import com.selin.rickandmortycomposeapp.ui.theme.Episode.EpisodesScreen
-import com.selin.rickandmortycomposeapp.ui.theme.Location.LocationScreen
+import com.selin.rickandmortycomposeapp.ui.theme.character.CharacterScreen
+import com.selin.rickandmortycomposeapp.ui.theme.character.DetailScreen
+import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodeDetailScreen
+import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesFromDetailScreen
+import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesScreen
+import com.selin.rickandmortycomposeapp.ui.theme.location.LocationScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,16 +77,20 @@ fun ScreenTransition() {
             CharacterScreen(navController = navController)
         }
         composable(
-            "detailScreen/{id}",
+            "characterDetailScreen/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
             it.arguments?.getInt("id")
             DetailScreen(characterId = it.arguments?.getInt("id") ?: 0, navController = navController)
         }
-        composable("episodesFromDetailScreen/{id}") {
-            it.arguments?.getInt("id")?.let { episodeId ->
+        composable(
+            "episodesFromCharacter/{ids}",
+            arguments = listOf(navArgument("ids") { type = NavType.StringType })
+        ) {
+            it.arguments?.getString("ids")?.let { episodeIds ->
                 EpisodesFromDetailScreen(
-                    id = episodeId,
+                    navController = navController,
+                    ids = episodeIds.split(",").map { it.toInt() },
                     viewModel = hiltViewModel()
                 )
             }
@@ -96,6 +101,12 @@ fun ScreenTransition() {
         ) {
             it.arguments?.getString("episode")
             EpisodesScreen(navController)
+        }
+        composable("episodeDetail/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ){
+            it.arguments?.getInt("id")
+            EpisodeDetailScreen(episodeId = it.arguments?.getInt("id") ?: 0, navController = navController)
         }
         composable(
             "location/{location}",
