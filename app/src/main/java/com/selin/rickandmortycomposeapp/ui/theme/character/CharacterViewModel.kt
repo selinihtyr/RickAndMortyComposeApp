@@ -3,7 +3,11 @@ package com.selin.rickandmortycomposeapp.ui.theme.character
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +28,10 @@ class CharacterViewModel @Inject constructor(
 
     private val _list = MutableLiveData<List<CharacterResponseList>>()
     val list: LiveData<List<CharacterResponseList>> get() = _list
+
+    val characters = Pager(PagingConfig(pageSize = 20)) {
+        CharacterPagingSource(repo)
+    }.flow.cachedIn(viewModelScope)
 
     fun loadCharacters() {
         viewModelScope.launch {

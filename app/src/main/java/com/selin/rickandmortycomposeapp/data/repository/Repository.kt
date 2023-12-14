@@ -32,6 +32,16 @@ class Repository @Inject constructor(private val service: Service) {
     suspend fun getCharacterById(id: Int): Response<CharacterResponseList> {
         return service.getCharacterById(id)
     }
+
+    suspend fun getCharactersByPage(page: Int): List<CharacterResponseList> {
+        val pageResponse = service.charactersByPage(page)
+        return if (pageResponse.isSuccessful) {
+            pageResponse.body()?.results ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
     // Episode
     suspend fun getAllEpisodes(): List<EpisodeResponseList> {
         val firstPageResponse = service.allEpisodes()

@@ -32,7 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.selin.rickandmortycomposeapp.R
+import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -40,8 +42,8 @@ import com.skydoves.landscapist.glide.GlideImage
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel = hiltViewModel()) {
+    val lazyPagingItems = viewModel.characters.collectAsLazyPagingItems()
     val loadingState by viewModel.loadingState.collectAsState()
-    val list = viewModel.list.observeAsState(listOf())
 
     LaunchedEffect(key1 = true) {
         viewModel.loadCharacters()
@@ -61,7 +63,8 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
                     }
                 }, title = {
                     Text(text = "Characters", fontSize = 32.sp, fontWeight = FontWeight.Bold)
-                })
+                }
+            )
         },
         content = {
             Box(
@@ -74,42 +77,17 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
                         .padding(top = 56.dp)
                 ) {
                     items(
-                        count = list.value.size,
-                        itemContent = {
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                                    .clickable {
-                                        navController.navigate("characterDetailScreen/${list.value[it].id}")
-                                    }
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    GlideImage(
-                                        imageModel = list.value[it].image,
-                                        modifier = Modifier
-                                            .size(100.dp)
-                                            .clip(CircleShape),
-                                        contentDescription = "Character Image",
-                                    )
-                                    Text(
-                                        text = list.value[it].name,
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        modifier = Modifier.padding(start = 50.dp)
-                                    )
-                                }
+                        lazyPagingItems.itemCount,
+                        key = { index -> index },
+                        itemContent = { index ->
+                            val item = lazyPagingItems[index]
+                            if (item != null) {
+                                CharacterItem(navController, item)
+                            } else {
+                                ShimmerEffect()
                             }
                         }
                     )
-                }
-                if (loadingState) {
-                    Effect()
                 }
             }
         }
@@ -117,7 +95,40 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
 }
 
 @Composable
-fun Effect() {
+fun CharacterItem(navController: NavController, character: CharacterResponseList) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable {
+                navController.navigate("characterDetailScreen/${character.id}")
+            }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            GlideImage(
+                imageModel = character.image,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentDescription = "Character Image",
+            )
+            Text(
+                text = character.name,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 50.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun ShimmerEffect() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
