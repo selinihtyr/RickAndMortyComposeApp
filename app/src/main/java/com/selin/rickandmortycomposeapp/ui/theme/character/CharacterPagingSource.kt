@@ -6,7 +6,6 @@ import com.selin.rickandmortycomposeapp.data.repository.Repository
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 
 class CharacterPagingSource(private val repo: Repository) : PagingSource<Int, CharacterResponseList>() {
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterResponseList> {
         return try {
             val currentPage = params.key ?: 1

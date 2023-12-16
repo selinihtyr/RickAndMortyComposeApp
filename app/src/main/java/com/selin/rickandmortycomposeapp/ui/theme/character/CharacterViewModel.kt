@@ -3,19 +3,17 @@ package com.selin.rickandmortycomposeapp.ui.theme.character
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.data.repository.Repository
+import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
-
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,5 +54,4 @@ class CharacterViewModel @Inject constructor(
             throw e
         }
     }
-
 }

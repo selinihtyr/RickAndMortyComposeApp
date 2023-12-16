@@ -43,7 +43,6 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel = hiltViewModel()) {
     val lazyPagingItems = viewModel.characters.collectAsLazyPagingItems()
-    val loadingState by viewModel.loadingState.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.loadCharacters()

@@ -13,7 +13,6 @@ import retrofit2.http.Query
 interface Service {
     @GET("character")
     suspend fun allCharacters(): Response<CharacterResponse>
-
     @GET("character")
     suspend fun charactersByPage(@Query("page") page: Int): Response<CharacterResponse>
 
