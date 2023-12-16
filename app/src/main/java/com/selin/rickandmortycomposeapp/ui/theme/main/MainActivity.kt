@@ -41,6 +41,7 @@ import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesFromDetailScree
 import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesScreen
 import com.selin.rickandmortycomposeapp.ui.theme.location.LocationScreen
 import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
+import com.selin.rickandmortycomposeapp.ui.theme.location.LocationDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -106,7 +107,7 @@ fun ScreenTransition() {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ){
             it.arguments?.getInt("id")
-            EpisodeDetailScreen(episodeId = it.arguments?.getInt("id") ?: 0, navController = navController)
+            EpisodeDetailScreen(episodeId = it.arguments?.getInt("id") ?: 0, viewModel = hiltViewModel())
         }
         composable(
             "location/{location}",
@@ -114,6 +115,13 @@ fun ScreenTransition() {
         ) {
             it.arguments?.getString("location")
             LocationScreen(navController)
+        }
+        composable(
+            "locationDetail/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            it.arguments?.getInt("id")
+            LocationDetailScreen( locationId = it.arguments?.getInt("id") ?: 0, viewModel = hiltViewModel())
         }
     }
 }

@@ -58,20 +58,6 @@ class EpisodeViewModel @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
-
-        @Suppress("UNREACHABLE_CODE")
-        suspend fun getCharacterById(id: Int): CharacterResponseList {
-            try {
-                val response = repo.getCharacterById(id)
-                if (response.isSuccessful) {
-                    return response.body() ?: throw NoSuchElementException("Character not found")
-                } else {
-                    throw IOException("Error getting character. HTTP ${response.code()}")
-                }
-            } catch (e: Exception) {
-                throw e
-            }
-        }
     }
 
     suspend fun getCharacterById(id: Int): CharacterResponseList {
@@ -83,7 +69,6 @@ class EpisodeViewModel @Inject constructor(
                 throw IOException("Error getting character. HTTP ${response.code()}")
             }
         } catch (e: Exception) {
-            // Log the exception or handle it appropriately
             throw e
         }
     }

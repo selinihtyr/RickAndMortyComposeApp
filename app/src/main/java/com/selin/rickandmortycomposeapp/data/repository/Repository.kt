@@ -1,5 +1,6 @@
 package com.selin.rickandmortycomposeapp.data.repository
 
+import android.util.Log
 import com.selin.rickandmortycomposeapp.data.remote.Service
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
@@ -29,6 +30,7 @@ class Repository @Inject constructor(private val service: Service) {
         }
         return emptyList()
     }
+
     suspend fun getCharacterById(id: Int): Response<CharacterResponseList> {
         return service.getCharacterById(id)
     }
@@ -60,12 +62,15 @@ class Repository @Inject constructor(private val service: Service) {
         }
         return emptyList()
     }
+
     suspend fun getEpisodeById(id: Int): Response<EpisodeResponseList> {
         return service.getEpisodeById(id)
     }
+
     suspend fun getEpisodesByIds(ids: List<Int>): Response<List<EpisodeResponseList>> {
         return service.getEpisodesByIds(ids)
     }
+
     // Location
     suspend fun getAllLocations(): List<LocationResponseList> {
         val firstPageResponse = service.allLocations()
@@ -83,5 +88,10 @@ class Repository @Inject constructor(private val service: Service) {
             return allLocation
         }
         return emptyList()
+    }
+
+    suspend fun getLocationById(id: Int): Response<LocationResponseList> {
+        return service.getLocationById(id)
+
     }
 }

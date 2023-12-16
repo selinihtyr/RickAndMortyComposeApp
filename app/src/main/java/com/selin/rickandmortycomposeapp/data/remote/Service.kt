@@ -5,6 +5,7 @@ import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponse
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponse
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
 import com.selin.rickandmortycomposeapp.data.retrofit.response.LocationResponse
+import com.selin.rickandmortycomposeapp.data.retrofit.response.LocationResponseList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -33,4 +34,6 @@ interface Service {
 
     @GET("location")
     suspend fun locationsByPage(@Query("page") page: Int): Response<LocationResponse>
+    @GET("location/{id}")
+    suspend fun getLocationById(@Path("id") id: Int): Response<LocationResponseList>
 }

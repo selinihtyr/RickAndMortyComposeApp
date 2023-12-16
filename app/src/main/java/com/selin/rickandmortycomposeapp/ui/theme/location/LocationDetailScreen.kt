@@ -1,18 +1,23 @@
-package com.selin.rickandmortycomposeapp.ui.theme.episode
+package com.selin.rickandmortycomposeapp.ui.theme.location
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,28 +31,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.skydoves.landscapist.glide.GlideImage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EpisodeDetailScreen(
-    episodeId: Int,
-    viewModel: EpisodeViewModel = hiltViewModel()
+fun LocationDetailScreen(
+    viewModel: LocationViewModel = hiltViewModel(),
+    locationId: Int
 ) {
-    val episode = viewModel.episode.collectAsState().value
-    val characterCount = episode?.characters?.size ?: 0
+    val location = viewModel.location.collectAsState().value
+    val characterCount = location?.residents?.size ?: 0
 
-    LaunchedEffect(episodeId) {
-        viewModel.getEpisodeById(episodeId)
+    LaunchedEffect(location) {
+        viewModel.getLocationById(locationId)
     }
 
     Scaffold(
@@ -59,13 +64,12 @@ fun EpisodeDetailScreen(
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
-                            contentDescription = "Localized description"
+                            contentDescription = ""
                         )
                     }
                 }, title = {
-                    Text(text = "Episode", fontSize = 32.sp, fontWeight = FontWeight.Bold)
-                }
-            )
+                    Text(text = "Location", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                })
         },
         content = {
             Column(
@@ -80,7 +84,7 @@ fun EpisodeDetailScreen(
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = episode?.name ?: "",
+                        text = location?.name ?: "",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -94,16 +98,28 @@ fun EpisodeDetailScreen(
                         .padding(8.dp),
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.padding(10.dp)
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .height(IntrinsicSize.Min)
+                            .align(Alignment.CenterHorizontally)
                     ) {
                         Text(
-                            text = "Air Date:",
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(10.dp)
+                            text = location?.type ?: "",
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(end = 30.dp)
+                        )
+                        Divider(
+                            color = Color.Gray,
+                            thickness = 1.dp,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(1.dp)
                         )
                         Text(
-                            text = episode?.airDate ?: "",
+                            text = location?.dimension ?: "",
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
@@ -127,9 +143,9 @@ fun EpisodeDetailScreen(
                         )
                         LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                             items(characterCount) { index ->
-                                episode?.characters?.get(index)?.substringAfterLast("/")
-                                    ?.toIntOrNull()?.let { characterId ->
-                                        CharacterBox(
+                                location?.residents?.get(index)
+                                    ?.substringAfterLast("/")?.toIntOrNull()?.let { characterId ->
+                                        LocationBox(
                                             characterId = characterId,
                                             viewModel = viewModel
                                         )
@@ -144,7 +160,7 @@ fun EpisodeDetailScreen(
 }
 
 @Composable
-fun CharacterBox(characterId: Int, viewModel: EpisodeViewModel) {
+fun LocationBox(characterId: Int, viewModel: LocationViewModel) {
     val character = remember { mutableStateOf<CharacterResponseList?>(null) }
 
     LaunchedEffect(characterId) {

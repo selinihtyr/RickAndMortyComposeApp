@@ -60,7 +60,7 @@ fun LocationScreen(navController: NavController, viewModel: LocationViewModel = 
                             .fillMaxSize()
                             .padding(8.dp)
                             .clickable {
-
+                                navController.navigate("locationDetail/${list.value[it].id}")
                             }
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
