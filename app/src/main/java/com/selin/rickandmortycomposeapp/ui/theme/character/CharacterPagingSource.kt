@@ -7,14 +7,13 @@ import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponse
 
 class CharacterPagingSource(private val repo: Repository) : PagingSource<Int, CharacterResponseList>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterResponseList> {
+        val page = params.key ?: 1
         return try {
-            val currentPage = params.key ?: 1
-            val characters = repo.getCharactersByPage(currentPage)
-
+            val response = repo.getAllCharacters()
             LoadResult.Page(
-                data = characters,
-                prevKey = if (currentPage == 1) null else currentPage - 1,
-                nextKey = if (characters.isEmpty()) null else currentPage + 1
+                data = response,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

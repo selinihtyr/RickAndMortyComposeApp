@@ -33,10 +33,7 @@ fun EpisodesFromDetailScreen(
     LaunchedEffect(ids) {
         val response = viewModel.getEpisodesIds(ids)
         if (response.isSuccessful) {
-            // Assuming the API returns a single EpisodeResponseList, not a list
             episode.value = response.body()!!
-        } else {
-            // Handle the error case here
         }
     }
 
