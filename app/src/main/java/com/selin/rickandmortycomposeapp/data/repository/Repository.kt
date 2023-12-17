@@ -1,6 +1,5 @@
 package com.selin.rickandmortycomposeapp.data.repository
 
-import android.util.Log
 import com.selin.rickandmortycomposeapp.data.remote.Service
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
@@ -20,12 +19,11 @@ class Repository @Inject constructor(private val service: Service) {
             val allCharacters = mutableListOf<CharacterResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = service.charactersByPage(i)
+                val pageResponse = service.allCharacters(i)
                 if (pageResponse.isSuccessful) {
                     allCharacters.addAll(pageResponse.body()?.results ?: emptyList())
                 }
             }
-
             return allCharacters
         }
         return emptyList()
@@ -35,16 +33,6 @@ class Repository @Inject constructor(private val service: Service) {
         return service.getCharacterById(id)
     }
 
-    suspend fun getCharactersByPage(page: Int): List<CharacterResponseList> {
-        val pageResponse = service.charactersByPage(page)
-        return if (pageResponse.isSuccessful) {
-            pageResponse.body()?.results ?: emptyList()
-        } else {
-            emptyList()
-        }
-    }
-
-    // Episode
     suspend fun getAllEpisodes(): List<EpisodeResponseList> {
         val firstPageResponse = service.allEpisodes()
 
@@ -53,7 +41,7 @@ class Repository @Inject constructor(private val service: Service) {
             val allEpisodes = mutableListOf<EpisodeResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = service.episodeByPage(i)
+                val pageResponse = service.allEpisodes(i)
                 if (pageResponse.isSuccessful) {
                     allEpisodes.addAll(pageResponse.body()?.results ?: emptyList())
                 }
@@ -71,27 +59,25 @@ class Repository @Inject constructor(private val service: Service) {
         return service.getEpisodesByIds(ids)
     }
 
-    // Location
     suspend fun getAllLocations(): List<LocationResponseList> {
         val firstPageResponse = service.allLocations()
 
         if (firstPageResponse.isSuccessful) {
             val totalPages = firstPageResponse.body()?.info?.pages ?: 0
-            val allLocation = mutableListOf<LocationResponseList>()
+            val allLocations = mutableListOf<LocationResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = service.locationsByPage(i)
+                val pageResponse = service.allLocations(i)
                 if (pageResponse.isSuccessful) {
-                    allLocation.addAll(pageResponse.body()?.results ?: emptyList())
+                    allLocations.addAll(pageResponse.body()?.results ?: emptyList())
                 }
             }
-            return allLocation
+            return allLocations
         }
         return emptyList()
     }
 
     suspend fun getLocationById(id: Int): Response<LocationResponseList> {
         return service.getLocationById(id)
-
     }
 }
