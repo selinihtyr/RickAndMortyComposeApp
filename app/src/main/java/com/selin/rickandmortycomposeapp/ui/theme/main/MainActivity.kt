@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,14 +35,14 @@ import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.model.CharacterHomePage
+import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import com.selin.rickandmortycomposeapp.ui.theme.character.CharacterScreen
 import com.selin.rickandmortycomposeapp.ui.theme.character.DetailScreen
 import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodeDetailScreen
 import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesFromDetailScreen
 import com.selin.rickandmortycomposeapp.ui.theme.episode.EpisodesScreen
-import com.selin.rickandmortycomposeapp.ui.theme.location.LocationScreen
-import com.selin.rickandmortycomposeapp.ui.theme.RickAndMortyComposeAppTheme
 import com.selin.rickandmortycomposeapp.ui.theme.location.LocationDetailScreen
+import com.selin.rickandmortycomposeapp.ui.theme.location.LocationScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,7 +83,10 @@ fun ScreenTransition() {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
             it.arguments?.getInt("id")
-            DetailScreen(characterId = it.arguments?.getInt("id") ?: 0, navController = navController)
+            DetailScreen(
+                characterId = it.arguments?.getInt("id") ?: 0,
+                navController = navController
+            )
         }
         composable(
             "episodesFromCharacter/{ids}",
@@ -103,11 +107,15 @@ fun ScreenTransition() {
             it.arguments?.getString("episode")
             EpisodesScreen(navController)
         }
-        composable("episodeDetail/{id}",
+        composable(
+            "episodeDetail/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
-        ){
+        ) {
             it.arguments?.getInt("id")
-            EpisodeDetailScreen(episodeId = it.arguments?.getInt("id") ?: 0, viewModel = hiltViewModel())
+            EpisodeDetailScreen(
+                episodeId = it.arguments?.getInt("id") ?: 0,
+                viewModel = hiltViewModel()
+            )
         }
         composable(
             "location/{location}",
@@ -121,7 +129,10 @@ fun ScreenTransition() {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
             it.arguments?.getInt("id")
-            LocationDetailScreen( locationId = it.arguments?.getInt("id") ?: 0, viewModel = hiltViewModel())
+            LocationDetailScreen(
+                locationId = it.arguments?.getInt("id") ?: 0,
+                viewModel = hiltViewModel()
+            )
         }
     }
 }
@@ -142,12 +153,18 @@ fun HomeScreen(navController: NavController) {
             count = cartList.size,
             itemContent = {
                 val character = cartList[it]
-                Card(modifier = Modifier
-                    .padding(15.dp)
-                    .fillMaxWidth()
-                    .clickable {
-                        handleItemClick(character, navController)
-                    }) {
+                Card(
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            handleItemClick(character, navController)
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White,
+                    )
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
