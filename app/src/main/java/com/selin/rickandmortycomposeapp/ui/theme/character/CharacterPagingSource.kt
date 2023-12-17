@@ -21,6 +21,6 @@ class CharacterPagingSource(private val repo: Repository) : PagingSource<Int, Ch
     }
 
     override fun getRefreshKey(state: PagingState<Int, CharacterResponseList>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition
     }
 }
