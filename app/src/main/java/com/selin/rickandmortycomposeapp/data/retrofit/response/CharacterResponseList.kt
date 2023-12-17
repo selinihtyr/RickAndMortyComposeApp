@@ -6,16 +6,16 @@ import com.selin.rickandmortycomposeapp.data.retrofit.model.Origin
 
 
 data class CharacterResponseList(
-    @SerializedName("created") var created: String,
-    @SerializedName("episode") var episode: List<String>,
-    @SerializedName("gender") var gender: String,
-    @SerializedName("id") var id: Int,
-    @SerializedName("image") var image: String,
-    @SerializedName("location") var location: CharacterLocation,
-    @SerializedName("name") var name: String,
-    @SerializedName("origin") var origin: Origin,
-    @SerializedName("species") var species: String,
-    @SerializedName("status") var status: String,
-    @SerializedName("type") var type: String,
-    @SerializedName("url") var url: String
+    @SerializedName("created") val created: String,
+    @SerializedName("episode") val episode: List<String>,
+    @SerializedName("gender") val gender: String,
+    @SerializedName("id") val id: Int,
+    @SerializedName("image") val image: String,
+    @SerializedName("location") val location: CharacterLocation,
+    @SerializedName("name") val name: String,
+    @SerializedName("origin") val origin: Origin,
+    @SerializedName("species") val species: String,
+    @SerializedName("status") val status: String,
+    @SerializedName("type") val type: String,
+    @SerializedName("url") val url: String
 )

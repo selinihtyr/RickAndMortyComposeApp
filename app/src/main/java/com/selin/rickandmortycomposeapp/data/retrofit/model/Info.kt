@@ -1,8 +1,10 @@
 package com.selin.rickandmortycomposeapp.data.retrofit.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Info(
-    val count: Int,
-    val next: String,
-    val pages: Int,
-    val prev: Any
+    @SerializedName("count") val count: Int,
+    @SerializedName("next") val next: String,
+    @SerializedName("pages") val pages: Int,
+    @SerializedName("prev") val prev: Any
 )

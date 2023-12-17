@@ -1,6 +1,8 @@
 package com.selin.rickandmortycomposeapp.data.retrofit.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Origin(
-    val name: String,
-    val url: String
+    @SerializedName("name") val name: String,
+    @SerializedName("url") val url: String
 )

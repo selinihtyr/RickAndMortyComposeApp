@@ -3,11 +3,11 @@ package com.selin.rickandmortycomposeapp.data.retrofit.response
 import com.google.gson.annotations.SerializedName
 
 data class LocationResponseList(
-    @SerializedName("created") var created: String,
-    @SerializedName("dimension") var dimension: String,
-    @SerializedName("id") var id: Int,
-    @SerializedName("name") var name: String,
-    @SerializedName("residents") var residents: List<String>,
-    @SerializedName("type") var type: String,
-    @SerializedName("url") var url: String
+    @SerializedName("created") val created: String,
+    @SerializedName("dimension") val dimension: String,
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String,
+    @SerializedName("residents") val residents: List<String>,
+    @SerializedName("type") val type: String,
+    @SerializedName("url") val url: String
 )
