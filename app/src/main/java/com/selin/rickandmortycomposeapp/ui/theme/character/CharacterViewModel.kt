@@ -10,8 +10,6 @@ import androidx.paging.cachedIn
 import com.selin.rickandmortycomposeapp.data.repository.Repository
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -21,24 +19,16 @@ class CharacterViewModel @Inject constructor(
     private val repo: Repository
 ) : ViewModel() {
 
-    private val _loadingState = MutableStateFlow(true)
-    val loadingState: StateFlow<Boolean> get() = _loadingState
-
     private val _list = MutableLiveData<List<CharacterResponseList>>()
     val list: LiveData<List<CharacterResponseList>> get() = _list
 
-    val characters = Pager(PagingConfig(pageSize = 20)) {
+    val paging = Pager(PagingConfig(pageSize = 20)) {
         CharacterPagingSource(repo)
     }.flow.cachedIn(viewModelScope)
 
     fun loadCharacters() {
         viewModelScope.launch {
-            try {
-                _loadingState.value = true
-                _list.value = repo.getAllCharacters()
-            } finally {
-                _loadingState.value = false
-            }
+            _list.value = repo.getAllCharacters()
         }
     }
 
