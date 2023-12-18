@@ -1,5 +1,6 @@
 package com.selin.rickandmortycomposeapp.ui.theme.episode
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,11 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
 
 @Composable
@@ -39,21 +44,30 @@ fun EpisodesFromDetailScreen(
 
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.mainBackground)),
     ) {
         items(
             count = episode.value?.size ?: 0,
             itemContent = { index ->
                 val currentEpisode = episode.value?.get(index)
                 Card(
+                    elevation = CardDefaults.cardElevation(5.dp),
                     modifier = Modifier
                         .padding(6.dp)
                         .fillMaxWidth()
+                        .background(Color.Transparent)
                         .clickable {
                             navController.navigate("episodeDetail/${currentEpisode?.id}")
                         }
                 ) {
-                    Row {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                    ) {
                         Text(
                             text = currentEpisode?.episode.toString(),
                             fontSize = 20.sp,
