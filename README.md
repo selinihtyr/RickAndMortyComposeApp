@@ -1,6 +1,6 @@
 # RickAndMortyComposeApp
 
-<img src="<"https://github.com/selinihtyr/RickAndMortyComposeApp/blob/master/app/src/main/res/mipmap-hdpi/rick_and_morty_icon_foreground.webp" width="100" height="100">
+<img src="https://github.com/selinihtyr/RickAndMortyComposeApp/blob/master/app/src/main/res/mipmap-hdpi/rick_and_morty_icon_foreground.webp" width="100" height="100">
 
 Preview video:
 
@@ -8,13 +8,13 @@ Preview video:
 
 This project is a mobile application developed using Kotlin and the Jetpack Compose UI toolkit. It's designed to provide a user-friendly interface for browsing information related to the popular TV show, "Rick and Morty". 
 
-##Features
+## Features
 
-Browse a list of locations from the show.
-View detailed information about each location, including the characters who reside there.
-Navigate to a detailed view of each character, including their image and name.
+- Browse a list of locations from the show.
+- View detailed information about each location, including the characters who reside there.
+- Navigate to a detailed view of each character, including their image and name.
 
-##Architecture & Design Patterns
+## Architecture & Design Patterns
 
 ## Technologies Used
 
