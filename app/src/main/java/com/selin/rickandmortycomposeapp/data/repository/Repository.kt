@@ -19,7 +19,7 @@ class Repository @Inject constructor(private val dataSource: DataSource) {
             val allCharacters = mutableListOf<CharacterResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = dataSource.getCharacters()
+                val pageResponse = dataSource.getCharacters(i)
                 if (pageResponse.isSuccessful) {
                     allCharacters.addAll(pageResponse.body()?.results ?: emptyList())
                 }
@@ -41,7 +41,7 @@ class Repository @Inject constructor(private val dataSource: DataSource) {
             val allEpisodes = mutableListOf<EpisodeResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = dataSource.getEpisodes()
+                val pageResponse = dataSource.getEpisodes(i)
                 if (pageResponse.isSuccessful) {
                     allEpisodes.addAll(pageResponse.body()?.results ?: emptyList())
                 }
@@ -67,7 +67,7 @@ class Repository @Inject constructor(private val dataSource: DataSource) {
             val allLocations = mutableListOf<LocationResponseList>()
 
             for (i in 1..totalPages) {
-                val pageResponse = dataSource.getLocations()
+                val pageResponse = dataSource.getLocations(i)
                 if (pageResponse.isSuccessful) {
                     allLocations.addAll(pageResponse.body()?.results ?: emptyList())
                 }

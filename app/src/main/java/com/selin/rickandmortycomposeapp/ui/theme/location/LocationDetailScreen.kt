@@ -43,8 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
-import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed
-import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed2
+import com.selin.rickandmortycomposeapp.ui.theme.character.handleBackPressed
 import com.skydoves.landscapist.glide.GlideImage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -67,8 +66,7 @@ fun LocationDetailScreen(
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-                        onBackPressed(navController = navController)
-                        onBackPressed2(navController = navController)
+                        handleBackPressed(navController)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),

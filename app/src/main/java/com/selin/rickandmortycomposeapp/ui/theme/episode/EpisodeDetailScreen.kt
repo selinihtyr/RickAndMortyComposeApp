@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.data.retrofit.response.EpisodeResponseList
+import com.selin.rickandmortycomposeapp.ui.theme.character.handleBackPressed
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,8 +68,7 @@ fun TopBar(navController: NavController) {
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = {
-                onBackPressed(navController = navController)
-                onBackPressed2(navController = navController)
+                handleBackPressed(navController)
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
@@ -82,27 +82,6 @@ fun TopBar(navController: NavController) {
             containerColor = colorResource(id = R.color.mainBackground)
         )
     )
-}
-
-var counter = 0
-fun onBackPressed(navController: NavController) {
-    counter++
-    if (counter == 1) {
-        navController.popBackStack()
-    } else {
-        counter--
-        navController.popBackStack()
-    }
-}
-
-fun onBackPressed2(navController: NavController) {
-    counter++
-    if (counter == 2) {
-        navController.navigate("home")
-    } else {
-        counter--
-        navController.navigate("home")
-    }
 }
 
 @Composable

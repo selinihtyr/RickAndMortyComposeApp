@@ -38,7 +38,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
-import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed2
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,8 +55,7 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-                        onBackPressed(navController = navController)
-                        onBackPressed2(navController = navController)
+                        handleBackPressed(navController)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
@@ -100,18 +98,18 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
         }
     )
 }
+var lastBackPressedTime: Long = 0
+const val BACK_PRESS_INTERVAL = 2000L // 2 saniye
 
-var counter = 0
-fun onBackPressed(navController: NavController) {
-    counter++
-    if (counter == 1) {
+fun handleBackPressed(navController: NavController) {
+    val currentTime = System.currentTimeMillis()
+
+    if (currentTime - lastBackPressedTime > BACK_PRESS_INTERVAL) {
         navController.popBackStack()
-        counter = 0
+    } else {
+        navController.popBackStack("home", false)
     }
-    if (counter == 2) {
-        navController.navigate("home")
-        counter = 0
-    }
+    lastBackPressedTime = currentTime
 }
 
 @Composable

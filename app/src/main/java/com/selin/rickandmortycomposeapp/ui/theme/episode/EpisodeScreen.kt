@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
+import com.selin.rickandmortycomposeapp.ui.theme.character.handleBackPressed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -46,8 +47,7 @@ fun EpisodesScreen(navController: NavController, viewModel: EpisodeViewModel = h
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-                        onBackPressed(navController = navController)
-                        onBackPressed2(navController = navController)
+                        handleBackPressed(navController)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
