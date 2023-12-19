@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,13 +34,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
+import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed
+import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed2
 import com.skydoves.landscapist.glide.GlideImage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -46,6 +52,7 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun LocationDetailScreen(
     viewModel: LocationViewModel = hiltViewModel(),
+    navController: NavController,
     locationId: Int
 ) {
     val location = viewModel.location.collectAsState().value
@@ -60,7 +67,8 @@ fun LocationDetailScreen(
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-                        //önceki sayfaya dön
+                        onBackPressed(navController = navController)
+                        onBackPressed2(navController = navController)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
@@ -68,8 +76,12 @@ fun LocationDetailScreen(
                         )
                     }
                 }, title = {
-                    Text(text = "Location", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                })
+                    Text(text = "Location", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = colorResource(id = R.color.mainBackground)
+                )
+            )
         },
         content = {
             Column(
@@ -81,7 +93,11 @@ fun LocationDetailScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = colorResource(id = R.color.white)
+                    ),
+                    elevation = CardDefaults.cardElevation(5.dp)
                 ) {
                     Text(
                         text = location?.name ?: "",
@@ -96,6 +112,10 @@ fun LocationDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = colorResource(id = R.color.white)
+                    ),
+                    elevation = CardDefaults.cardElevation(5.dp)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -131,11 +151,22 @@ fun LocationDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
+                        .clickable {
+                            navController.navigate("locationMapScreen/${location?.id}") {
+                                popUpTo("locationDetailScreen/${location?.id}") {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = colorResource(id = R.color.white)
+                    ),
+                    elevation = CardDefaults.cardElevation(5.dp)
                 ) {
                     Column {
                         Text(
                             text = "Characters",
-                            fontSize = 24.sp,
+                            fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(10.dp)
                                 .align(Alignment.CenterHorizontally),
@@ -147,6 +178,7 @@ fun LocationDetailScreen(
                                     ?.substringAfterLast("/")?.toIntOrNull()?.let { characterId ->
                                         LocationBox(
                                             characterId = characterId,
+                                            navController = navController,
                                             viewModel = viewModel
                                         )
                                     }
@@ -160,7 +192,7 @@ fun LocationDetailScreen(
 }
 
 @Composable
-fun LocationBox(characterId: Int, viewModel: LocationViewModel) {
+fun LocationBox(characterId: Int, viewModel: LocationViewModel, navController: NavController) {
     val character = remember { mutableStateOf<CharacterResponseList?>(null) }
 
     LaunchedEffect(characterId) {
@@ -171,7 +203,7 @@ fun LocationBox(characterId: Int, viewModel: LocationViewModel) {
             .padding(8.dp)
             .size(100.dp)
             .clickable {
-                //navigate to character detail
+                navController.navigate("characterDetailScreen/${character.value?.id}")
             }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

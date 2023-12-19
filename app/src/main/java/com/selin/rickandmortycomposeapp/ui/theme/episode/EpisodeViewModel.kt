@@ -1,6 +1,5 @@
 package com.selin.rickandmortycomposeapp.ui.theme.episode
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class EpisodeViewModel @Inject constructor(
     private val repo: Repository
 ) : ViewModel() {
-
     private val _list = MutableLiveData<List<EpisodeResponseList>>()
     val list: LiveData<List<EpisodeResponseList>> get() = _list
 
@@ -38,12 +36,11 @@ class EpisodeViewModel @Inject constructor(
             val response = repo.getEpisodeById(id)
             if (response.isSuccessful) {
                 _episode.value = response.body()
-                Log.d("EpisodeViewModel", "Episode fetched successfully: ${_episode.value}")
             } else {
-                Log.e("EpisodeViewModel", "Error fetching episode: HTTP ${response.code()}")
+                throw IOException("Error getting episode. HTTP ${response.code()}")
             }
         } catch (e: Exception) {
-            Log.e("EpisodeViewModel", "Error fetching episode", e)
+            throw e
         }
     }
 

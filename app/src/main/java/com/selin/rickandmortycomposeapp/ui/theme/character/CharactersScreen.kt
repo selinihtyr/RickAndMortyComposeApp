@@ -38,6 +38,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.selin.rickandmortycomposeapp.R
 import com.selin.rickandmortycomposeapp.data.retrofit.response.CharacterResponseList
 import com.selin.rickandmortycomposeapp.ui.theme.ShimmerEffect
+import com.selin.rickandmortycomposeapp.ui.theme.episode.onBackPressed2
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +56,8 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate("home")
+                        onBackPressed(navController = navController)
+                        onBackPressed2(navController = navController)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
@@ -97,6 +99,19 @@ fun CharacterScreen(navController: NavController, viewModel: CharacterViewModel 
             }
         }
     )
+}
+
+var counter = 0
+fun onBackPressed(navController: NavController) {
+    counter++
+    if (counter == 1) {
+        navController.popBackStack()
+        counter = 0
+    }
+    if (counter == 2) {
+        navController.navigate("home")
+        counter = 0
+    }
 }
 
 @Composable
@@ -151,6 +166,7 @@ fun ShimmerEffectUi() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
+                        .background(brush = ShimmerEffect())
                 ) {
                     Row(
                         modifier = Modifier

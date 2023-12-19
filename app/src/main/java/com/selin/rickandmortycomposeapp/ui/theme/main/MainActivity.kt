@@ -114,6 +114,7 @@ fun ScreenTransition() {
             it.arguments?.getInt("id")
             EpisodeDetailScreen(
                 episodeId = it.arguments?.getInt("id") ?: 0,
+                navController = navController,
                 viewModel = hiltViewModel()
             )
         }
@@ -131,6 +132,7 @@ fun ScreenTransition() {
             it.arguments?.getInt("id")
             LocationDetailScreen(
                 locationId = it.arguments?.getInt("id") ?: 0,
+                navController = navController,
                 viewModel = hiltViewModel()
             )
         }
