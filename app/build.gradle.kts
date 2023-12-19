@@ -78,6 +78,7 @@ dependencies {
 
     //ViewModel
     implementation ("androidx.navigation:navigation-compose:2.7.5")
+
     //LiveData
     implementation ("androidx.compose.runtime:runtime-livedata:1.6.0-beta02")
 
@@ -104,8 +105,13 @@ dependencies {
     //Shimmer
     implementation("com.valentinilk.shimmer:compose-shimmer:1.2.0")
 
-}
+    //Room
+    implementation("androidx.room:room-runtime:2.4.1")
+    kapt("androidx.room:room-compiler:2.4.1")
+    implementation("androidx.room:room-ktx:2.4.1")
 
+
+}
 kapt {
     correctErrorTypes = true
 }

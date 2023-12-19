@@ -1,6 +1,7 @@
 package com.selin.rickandmortycomposeapp.di
 
 import com.selin.rickandmortycomposeapp.data.remote.Service
+import com.selin.rickandmortycomposeapp.data.room.DataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRefrotif(): Retrofit {
+    fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -27,5 +28,11 @@ object NetworkModule {
     @Provides
     fun providesRickAndMortyApi(retrofit: Retrofit): Service {
         return retrofit.create(Service::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesRickAndMortyDataSource(service: Service): DataSource {
+        return DataSource(service)
     }
 }
