@@ -2,7 +2,7 @@
 
 <img src="https://github.com/selinihtyr/RickAndMortyComposeApp/blob/master/app/src/main/res/mipmap-hdpi/rick_and_morty_icon_foreground.webp" width="100" height="100">
 
-Preview video:
+Preview video: https://drive.google.com/file/d/1KcSYynhFFFb80JsoNtm8iAs6pp6nD-PU/view?usp=sharing
 
 ## Overview
 
